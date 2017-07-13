@@ -3,8 +3,6 @@ package justencrypt
 import (
 	"bytes"
 	"encoding/binary"
-	"encoding/hex"
-	"log"
 )
 
 func Encrypt(plainText []byte, passphrase []byte) ([]byte, error) {
@@ -25,22 +23,18 @@ func Encrypt(plainText []byte, passphrase []byte) ([]byte, error) {
 	serialized = append(serialized, iv...)
 	serialized = append(serialized, ct...)
 
-	hex2 := hex.EncodeToString(serialized)
-	log.Println(hex2)
-
 	return serialized, nil
 }
 
 func Decrypt(cipherText []byte, passphrase []byte) ([]byte, error) {
 
-	log.Println(cipherText)
 	buffer := bytes.NewBuffer(cipherText)
 	header := &Header{}
 	err := header.Parse(buffer)
 	if err != nil {
 		return emptyArray, err
 	}
-	log.Printf("%+v", header)
+
 	iv := make([]byte, IvLen)
 	err = binary.Read(buffer, binary.BigEndian, iv)
 

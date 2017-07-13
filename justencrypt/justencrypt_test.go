@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
-	"log"
 	"testing"
 )
 
@@ -145,7 +144,6 @@ func TestKeyDerivation(t *testing.T) {
 		//for i := 0; i < 1; i++ {
 		//	fixture := fixtures.Fixtures[i]
 		t.Run(desc(i), func(t *testing.T) {
-			log.Printf("%+v", fixture)
 			expectedKey, err := hex.DecodeString(fixture.Expected)
 
 			salt, err := hex.DecodeString(fixture.Salt)
@@ -182,7 +180,6 @@ func TestEncryption(t *testing.T) {
 
 	for i, fixture := range fixtures.Fixtures {
 		t.Run(desc(i), func(t *testing.T) {
-			log.Printf("%+v", fixture)
 
 			salt, err := hex.DecodeString(fixture.Salt)
 			if err != nil {
